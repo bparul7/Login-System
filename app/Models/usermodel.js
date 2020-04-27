@@ -5,7 +5,7 @@
 //connect to databse
 //sequelise is a connection
 const {Sequelize, DataTypes} = require ('sequelize');
-const sequelize = require ('../Congigure db/sequelise.js');
+const sequelize = require ('../Congigure_db/sequelise.js');
 
 const User = sequelize.define ('User', {
 	firstName : {
@@ -13,10 +13,10 @@ const User = sequelize.define ('User', {
 		allowNull : false,
 		validate : {
 			isName (value) {
-				for (let i=0; i<value.size(); i++) {
+				for (let i=0; i<value.length; i++) {
 					if (value[i]>='a'&&value[i]<='z')
 						continue;
-					if (value[i]>='a'&&value[i]<='z')
+					if (value[i]>='A'&&value[i]<='Z')
 						continue;
 					throw new Error("Name should contain alphabets only");
 				}
@@ -38,18 +38,18 @@ const User = sequelize.define ('User', {
 		toLowerCase : true,
 		validate : {
 			isLength (value) {
-				if (value.size()<5)
+				if (value.length<5)
 					throw new Error ("password too short");
-				else if (value.size()>14)
+				else if (value.length>14)
 					throw new Error ("password too long");
-			},
-			is : ["^[a-z]+$",'i']
+			}
 		}
 	}
 }, {
 	//other model options
 	//MODel Name = Table Name
-	tableName : 'users'
+	tableName : 'users',
+	timestamps: false
 });
 
 //User model
